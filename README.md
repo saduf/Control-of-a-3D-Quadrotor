@@ -133,9 +133,9 @@ notice that in the python controller the acceleration_ff term is by default a [0
 the feedforward term can be useful to improve the precision of the controller if we have access to the information
 of the next [x,y] commanded acceleration in advance.  
 
-You can try to limit the vertical velocity and acceleration to account for a more realistic scenario.
-
 <p align="center"><img src ="./misc/lateral_acc.gif" /></p>
+
+You can try to limit the vertical velocity and acceleration to account for a more realistic scenario.
 
 #### :snake: Python lateral position control
 
