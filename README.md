@@ -44,13 +44,13 @@ We convert this rotational accelerations into Torques using the moment of inerti
 
 #### :snake: Python body rate control
 
-Refer to lines 213-22 in controller.py
+Refer to lines 218-231 in controller.py
 
 Notice that the x, y, z Torque is constrained into a MAX_TORQUE value to account for a more realistic implementation.
 
 #### :heavy_plus_sign::heavy_plus_sign: C++ body rate control
 
-Refer to lines 104-106 in QuadControl.cpp
+Refer to lines 103-106 in QuadControl.cpp
 
 ### 2. Implement roll pitch control in python and C++.
 The controller should use the acceleration and thrust commands, in addition to the vehicle attitude to output a body rate command. 
@@ -76,10 +76,10 @@ Finally the values are converted into body frame angular velocities:
 <p align="center"><img src ="./misc/angular_velocities.gif" /></p>
 
 #### :snake: Python roll pitch control
-Refer to lines 177-199 in controller.py
+Refer to lines 176-205 in controller.py
 
 #### :heavy_plus_sign::heavy_plus_sign: C++ roll pitch control
-Refer to lines 137-150 in QuadControl.cpp
+Refer to lines 137-156 in QuadControl.cpp
 
 ### 3. Implement altitude control in python.
 The controller should use both the down position and the down velocity to command thrust. Ensure that the output value is indeed thrust (the drone's mass needs to be accounted for) and that the thrust includes the non-linear effects from non-zero roll/pitch angles.
@@ -101,7 +101,7 @@ Finally the magnitude of the Thrust is limited to a value MAX_THRUST in the code
 
 #### :snake: Python altitude control
 
-Refer to lines 144-159 in controller.py.
+Refer to lines 144-163 in controller.py.
 
 ### 4. Implement altitude controller in C++.
 The controller should use both the down position and the down velocity to command thrust. Ensure that the output value is indeed thrust (the drone's mass needs to be accounted for) and that the thrust includes the non-linear effects from non-zero roll/pitch angles.
@@ -122,7 +122,7 @@ Finally we transform the linear acceleration u1_hat into thrust:
 From the c++ implementation we can see that the velocity is constrained into a range [-maxDescentRate, maxAscentRate] to account for a more realistic scenario.
 
 #### :heavy_plus_sign::heavy_plus_sign: C++ altitude controller
-Refer to lines 181-183 in QuadControl.cpp
+Refer to lines 188-193 in QuadControl.cpp
 
 
 ### 5. Implement lateral position control in python and C++.
@@ -135,15 +135,15 @@ of the next [x,y] commanded acceleration in advance.
 
 <p align="center"><img src ="./misc/lateral_acc.gif" /></p>
 
-You can try to limit the vertical velocity and acceleration to account for a more realistic scenario.
+The vertical velocity and acceleration are limited to maxSpeedXY and maxAccelXY, respectively, to account for a more realistic scenario.
 
 #### :snake: Python lateral position control
 
-Refer to lines 112-128 in controller.py
+Refer to lines 110-128 in controller.py
 
 #### :heavy_plus_sign::heavy_plus_sign: C++ lateral position control
 
-Refer to lines 216-232 in QuadControl.cpp
+Refer to lines 228-246 in QuadControl.cpp
 
 ### 6. Implement yaw control in python and C++.
 The controller can be a linear/proportional heading controller to yaw rate commands (non-linear transformation not required).
@@ -158,11 +158,11 @@ The psi_error is compensated for the yaw rate command to take the shorter spin d
 
 #### :snake: Python yaw control
 
-Refer to lines 238-248 in controller.py
+Refer to lines 243-255 in controller.py
 
 #### :heavy_plus_sign::heavy_plus_sign: C++ yaw control
 
-Refer to lines 253-261 in QuadControl.cpp
+Refer to lines 270-280 in QuadControl.cpp
 
 ### 7. Implement calculating the motor commands given commanded thrust and moments in C++.
 The thrust and moments should be converted to the appropriate 4 different desired thrust forces for the moments. 
@@ -189,8 +189,6 @@ cmd.desiredThrustsN[2] = 0.25f * (collThrustCmd + sqrt(2)/L * (momentCmd.x - mom
 cmd.desiredThrustsN[3] = 0.25f * (collThrustCmd - sqrt(2)/L * (momentCmd.x + momentCmd.y) - momentCmd.z/kappa); // rear right
 
 ```
-
-
 
 ### Execute the flight
 #### 1. Does it work?
