@@ -189,8 +189,10 @@ float QuadControl::AltitudeControl(float posZCmd, float velZCmd, float posZ, flo
     float acc_vel = kpPosZ * (posZCmd - posZ) + velZCmd;
     acc_vel = CONSTRAIN(acc_vel, -maxDescentRate, maxAscentRate);
     
+    integratedAltitudeError += (posZCmd - posZ)*dt;
+    
     // Thrust PID controller accounting for gravity effect
-    thrust = -(accelZCmd + kpVelZ * (acc_vel - velZ) - 9.81 + KiPosZ*(posZCmd - posZ)*dt) * mass / R(2,2);
+    thrust = -(accelZCmd + kpVelZ * (acc_vel - velZ) - 9.81 + KiPosZ*integratedAltitudeError) * mass / R(2,2);
     
     /////////////////////////////// END STUDENT CODE ////////////////////////////
     
