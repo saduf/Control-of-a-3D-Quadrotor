@@ -27,7 +27,7 @@
   
 | z_kp| z_kd | z_ki | xy_kp | xy_kd | kp_bank | kp_yaw | kp_p | kp_k | kp_r | 
 | --- | --- | --- | --- |--- | --- | --- | --- |--- | --- | 
-|15.0  |8.0 | 15.0 | 14.0 | 4.0 | 12.0| 5.0 | 65.0 | 60.0 | 10.0 |
+|15.0  |6.0 | 8.0 | 14.0 | 4.0 | 12.0| 5.0 | 65.0 | 60.0 | 10.0 |
 
 ---
 
@@ -113,7 +113,11 @@ This Inegrator will help to compensate the z position error originated from non 
  
 The controller equation has the following form:
 
-<p align="center"><img src ="./misc/z_PID.gif" /></p>
+<p align="center"><img src ="./misc/u_bar_PID.gif" /></p>
+
+where integratedError is the Z position error accumulation over small time increments dt:
+
+<p align="center"><img src ="./misc/integratedError.gif" /></p>
 
 Finally we transform the linear acceleration u1_hat into thrust:
 
@@ -122,7 +126,7 @@ Finally we transform the linear acceleration u1_hat into thrust:
 From the c++ implementation we can see that the velocity is constrained into a range [-maxDescentRate, maxAscentRate] to account for a more realistic scenario.
 
 #### :heavy_plus_sign::heavy_plus_sign: C++ altitude controller
-Refer to lines 188-193 in QuadControl.cpp
+Refer to lines 188-195 in QuadControl.cpp
 
 
 ### 5. Implement lateral position control in python and C++.
@@ -143,7 +147,7 @@ Refer to lines 110-128 in controller.py
 
 #### :heavy_plus_sign::heavy_plus_sign: C++ lateral position control
 
-Refer to lines 228-246 in QuadControl.cpp
+Refer to lines 230-248 in QuadControl.cpp
 
 ### 6. Implement yaw control in python and C++.
 The controller can be a linear/proportional heading controller to yaw rate commands (non-linear transformation not required).
@@ -162,7 +166,7 @@ Refer to lines 243-255 in controller.py
 
 #### :heavy_plus_sign::heavy_plus_sign: C++ yaw control
 
-Refer to lines 270-280 in QuadControl.cpp
+Refer to lines 272-282 in QuadControl.cpp
 
 ### 7. Implement calculating the motor commands given commanded thrust and moments in C++.
 The thrust and moments should be converted to the appropriate 4 different desired thrust forces for the moments. 
